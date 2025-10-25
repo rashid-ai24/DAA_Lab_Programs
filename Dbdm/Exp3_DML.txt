@@ -1,0 +1,16 @@
+INSERT INTO Student (StudentID, Name, DOB, Gender, Department, Year, Email, Phone, Address)
+VALUES
+(101, 'Alice', '2004-05-15', 'Female', 'CSE', 2, 'alice@gmail.com', '9876543210', 'Chennai'),
+(102, 'Rahul', '2003-08-20', 'Male', 'ECE', 3, 'rahul@gmail.com', '9123456789', 'Coimbatore'),
+(103, 'Divya', '2005-01-10', 'Female', 'IT', 1, 'divya@gmail.com', '9012345678', 'Madurai');
+SELECT * FROM Student;
+UPDATE Student SET Email = 'rahul2025@gmail.com' WHERE StudentID = 102;
+DELETE FROM Student WHERE StudentID = 103;
+SELECT * FROM Student WHERE Department = 'CSE';
+SELECT * FROM Student ORDER BY Name ASC;
+SELECT COUNT(*) AS Total_Students FROM Student;
+SELECT * FROM Student WHERE Name LIKE 'A%';
+SELECT * FROM Student WHERE Department IN ('CSE', 'IT');
+SELECT * FROM Student WHERE Year BETWEEN 2 AND 4;
+SELECT DISTINCT Department FROM Student;
+SELECT * FROM Student ORDER BY Year DESC;

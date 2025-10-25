@@ -1,0 +1,38 @@
+CREATE DATABASE StudentDB;
+USE StudentDB;
+CREATE TABLE Student (
+    StudentID INT PRIMARY KEY,
+    Name VARCHAR(100),
+    DOB DATE,
+    Gender VARCHAR(10),
+    Department VARCHAR(50),
+    Year INT,
+    Email VARCHAR(100),
+    Phone VARCHAR(15),
+    Address VARCHAR(200)
+);
+CREATE TABLE Course (
+    CourseID VARCHAR(10) PRIMARY KEY,
+    CourseName VARCHAR(100),
+    Credits INT,
+    Department VARCHAR(50)
+);
+CREATE TABLE Enrollment (
+    EnrollmentID INT PRIMARY KEY,
+    StudentID INT,
+    CourseID VARCHAR(10),
+    Semester INT,
+    Grade CHAR(2)
+);
+CREATE TABLE Attendance (
+    AttendanceID INT PRIMARY KEY,
+    StudentID INT,
+    CourseID VARCHAR(10),
+    Date DATE,
+    Status VARCHAR(10)
+);
+SHOW TABLES;
+DESC Student;
+DESC Course;
+DESC Enrollment;
+DESC Attendance;

@@ -1,0 +1,12 @@
+CREATE DATABASE BankDB;
+USE BankDB;
+CREATE TABLE Account (AccID INT PRIMARY KEY, AccName VARCHAR(100), Balance INT);
+INSERT INTO Account VALUES (1, 'Alice', 5000), (2, 'Bob', 3000);
+START TRANSACTION;
+UPDATE Account SET Balance = Balance - 1000 WHERE AccID = 1;
+UPDATE Account SET Balance = Balance + 1000 WHERE AccID = 2;
+SAVEPOINT BeforeError;
+UPDATE Account SET Balance = Balance - 2000 WHERE AccID = 2;
+ROLLBACK TO BeforeError;
+COMMIT;
+SELECT * FROM Account;

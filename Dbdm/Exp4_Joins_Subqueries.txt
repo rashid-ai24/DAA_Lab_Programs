@@ -1,0 +1,13 @@
+CREATE DATABASE CollegeDB;
+USE CollegeDB;
+CREATE TABLE Student (StudentID INT PRIMARY KEY, Name VARCHAR(100), Department VARCHAR(50));
+CREATE TABLE Course (CourseID VARCHAR(10) PRIMARY KEY, CourseName VARCHAR(100));
+CREATE TABLE Enrollment (EnrollmentID INT PRIMARY KEY, StudentID INT, CourseID VARCHAR(10));
+INSERT INTO Student VALUES (101, 'Alice', 'CSE'), (102, 'Rahul', 'ECE'), (103, 'Divya', 'IT');
+INSERT INTO Course VALUES ('C101', 'DBMS'), ('C102', 'Computer Networks'), ('C103', 'Operating Systems');
+INSERT INTO Enrollment VALUES (1, 101, 'C101'), (2, 102, 'C101'), (3, 102, 'C102');
+SELECT S.Name, C.CourseName FROM Student S JOIN Enrollment E ON S.StudentID = E.StudentID JOIN Course C ON E.CourseID = C.CourseID;
+SELECT S.Name, C.CourseName FROM Student S LEFT JOIN Enrollment E ON S.StudentID = E.StudentID LEFT JOIN Course C ON E.CourseID = C.CourseID;
+SELECT C.CourseName, S.Name FROM Course C RIGHT JOIN Enrollment E ON C.CourseID = E.CourseID RIGHT JOIN Student S ON E.StudentID = S.StudentID;
+SELECT Name FROM Student WHERE StudentID IN (SELECT StudentID FROM Enrollment GROUP BY StudentID HAVING COUNT(*) > 1);
+SELECT CourseName FROM Course WHERE CourseID NOT IN (SELECT CourseID FROM Enrollment);

@@ -1,0 +1,45 @@
+CREATE DATABASE CollegeDB;
+USE CollegeDB;
+CREATE TABLE StudentMarks (
+    StudentID INT PRIMARY KEY,
+    StudentName VARCHAR(100),
+    Mark1 INT,
+    Mark2 INT,
+    Mark3 INT,
+    Total INT DEFAULT 0,
+    Average DECIMAL(5,2) DEFAULT 0.00,
+    Status VARCHAR(10)
+);
+DELIMITER $$
+CREATE TRIGGER UpdateStatus
+BEFORE INSERT ON StudentMarks
+FOR EACH ROW
+BEGIN
+    DECLARE avg_score DECIMAL(5,2);
+    SET avg_score = (NEW.Mark1 + NEW.Mark2 + NEW.Mark3) / 3;
+    IF avg_score >= 50 THEN
+        SET NEW.Status = 'PASS';
+    ELSE
+        SET NEW.Status = 'FAIL';
+    END IF;
+END $$
+DELIMITER ;
+DELIMITER $$
+CREATE PROCEDURE CalculateResult(IN sid INT)
+BEGIN
+    DECLARE m1 INT;
+    DECLARE m2 INT;
+    DECLARE m3 INT;
+    DECLARE tot INT;
+    DECLARE avg DECIMAL(5,2);
+    SELECT Mark1, Mark2, Mark3 INTO m1, m2, m3 FROM StudentMarks WHERE StudentID = sid;
+    SET tot = m1 + m2 + m3;
+    SET avg = tot / 3;
+    UPDATE StudentMarks SET Total = tot, Average = avg WHERE StudentID = sid;
+END $$
+DELIMITER ;
+INSERT INTO StudentMarks (StudentID, StudentName, Mark1, Mark2, Mark3) VALUES (101, 'Ananya', 70, 65, 75);
+CALL CalculateResult(101);
+INSERT INTO StudentMarks (StudentID, StudentName, Mark1, Mark2, Mark3) VALUES (102, 'Rahul', 40, 35, 45);
+CALL CalculateResult(102);
+SELECT * FROM StudentMarks;
